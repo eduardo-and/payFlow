@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "253025199152",
+    "project_id": "eduardo-and-payflow",
+    "storage_bucket": "eduardo-and-payflow.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253025199152:android:41aa721b3f2857d16079f5",
+        "android_client_info": {
+          "package_name": "com.example.payflow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253025199152-ko09g2pn0eum4q0fn7is9f28aas0m73i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.payflow",
+            "certificate_hash": "0576d992db2c449dea15dfd09ae1db8d8f73ea58"
+          }
+        },
+        {
+          "client_id": "253025199152-cd4u3a6kpklg03jvk0bvvlq3fjepfpr1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQxyak7E-WXA3yqKZYJ3uZwXFGUKU_0ro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "253025199152-cd4u3a6kpklg03jvk0bvvlq3fjepfpr1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
