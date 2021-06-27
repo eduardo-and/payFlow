@@ -21,6 +21,11 @@ class _BarcodeScannerState extends State<BarcodeScanner> {
 
   void initState() {
     ctrl.getAvailableCameras();
+    ctrl.statusNotifier.addListener(() {
+      if(ctrl.status.hasBarcode){
+        Navigator.pushReplacementNamed(context, "/insert_boleto", arguments: ctrl.status.barcode );
+      }
+    });
     super.initState();
   }
 
@@ -38,7 +43,7 @@ class _BarcodeScannerState extends State<BarcodeScanner> {
             builder: (_, status, __) {
               if (status.showCamera) {
                 return Container(
-                  child: status.cameraController!.buildPreview(),
+                  child: ctrl.cameraController!.buildPreview(),
                 );
               } else {
                 return Container();
@@ -81,29 +86,27 @@ class _BarcodeScannerState extends State<BarcodeScanner> {
             ),
             bottomNavigationBar: SetLabelButtons(
                 primaryLabel: "Inserir código de boleto",
-                primaryOnPressed: () {},
+                primaryOnPressed: () { Navigator.pushReplacementNamed(context, "/insert_boleto");},
                 secondaryLabel: "Adicionar da galeria",
                 secondaryOnPressed: () {}),
           ),
         ),
-        // ValueListenableBuilder<BarcodeScannerStatus>(
-        //     valueListenable: ctrl.statusNotifier,
-        //     builder: (_, status, __) {
-        //       if (status.hasError) {
-        //         return BottomSheetWidget(
-        //             title: "Não foi possível identificar um código de barras.",
-        //             subTitle:
-        //                 "Tente escanear novamente ou digite o código do seu boleto.",
-        //             primaryLabel: "Escanear novamente",
-        //             primaryOnPressed: () {
-        //               ctrl.getAvailableCameras();
-        //             },
-        //             secondaryLabel: "Digitar código",
-        //             secondaryOnPressed: () {});
-        //       } else {
-        //         return Container();
-        //       }
-        //     }),
+        ValueListenableBuilder<BarcodeScannerStatus>(
+            valueListenable: ctrl.statusNotifier,
+            builder: (_, status, __) {
+              if (status.hasError) {
+                return BottomSheetWidget(
+                    title: "Não foi possível identificar um código de barras.",
+                    subTitle:
+                        "Tente escanear novamente ou digite o código do seu boleto.",
+                    primaryLabel: "Escanear novamente",
+                    primaryOnPressed: () {ctrl.scanWithCamera();} ,                   
+                    secondaryLabel: "Digitar código",
+                    secondaryOnPressed: () { Navigator.pushReplacementNamed(context, "/insert_boleto");});
+              } else {
+                return Container();
+              }
+            }),
       ]),
     );
   }

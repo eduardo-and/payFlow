@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:payflow/modules/extract/extract_page.dart';
 import 'package:payflow/modules/home/home_controller.dart';
+import 'package:payflow/modules/meus_boletos_page/meus_boletos_page.dart';
+import 'package:payflow/shared/models/user_model.dart';
 import 'package:payflow/shared/themes/app_colors.dart';
 import 'package:payflow/shared/themes/app_text_styles.dart';
 
+
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  
+  final UserModel user;
+  const HomePage({Key? key,required this.user}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -13,17 +19,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final ctrl = HomeController();
   final pages = [
-    Container(
-      color: Colors.red,
-    ),
-    Container(color: Colors.blue)
+    MeusBoletosPage(key: UniqueKey()),
+    ExtractPage(key: UniqueKey())
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(152),
+        preferredSize: Size.fromHeight(152), 
         child: Container(
             height: 152,
             color: AppColors.primary,
@@ -36,7 +40,7 @@ class _HomePageState extends State<HomePage> {
                         style: AppTextStyles.titleRegular,
                         children: [
                           TextSpan(
-                              text: "Dev",
+                              text: "${widget.user.name}",
                               style: AppTextStyles.titleBoldBackground)
                         ]),
                   ),
@@ -49,6 +53,7 @@ class _HomePageState extends State<HomePage> {
                     height: 48,
                     decoration: BoxDecoration(
                       color: Colors.black,
+                      image: DecorationImage(image: NetworkImage(widget.user.photoUrl!)),
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
@@ -73,9 +78,11 @@ class _HomePageState extends State<HomePage> {
                 size: 30,
               )),
           GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, "/barcode_scanner");
-            },
+            onTap: () async {
+              // Navigator.pushNamed(context, "/barcode_scanner");
+              await Navigator.pushNamed(context, "/barcode_scanner");
+              setState(() {});
+            },  
             child: Container(
                 width: 56,
                 height: 56,
@@ -101,7 +108,10 @@ class _HomePageState extends State<HomePage> {
               )),
         ]),
       ),
-      body: pages[ctrl.currentPage],
+      body: [
+    MeusBoletosPage(key: UniqueKey()),
+    ExtractPage(key: UniqueKey())
+  ][ctrl.currentPage],
     );
   }
 }
